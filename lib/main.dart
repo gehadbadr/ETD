@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_app/routes/welcome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+     // title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -55,18 +57,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  var userName = TextEditingController();
+  var password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,60 +69,125 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
+        appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+          title: Text("My App",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 27,
+                  fontFamily:"Myfont",
+                  fontWeight: FontWeight.w700)),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.white,
+              size: 30,
+            ),
+            onPressed: () {},
+          ),
+          actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.message,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                onPressed: () {}),
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+                size: 30,
+              ),
+              onPressed: () {},
+            ),
+          ],
       ),
-
       body: Container(
-     color: Colors.purple[50],
-
-      child: Center(
+        color: Colors.purple[50],
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
-                children:[
-                  Icon(Icons.diamond ,size: 50,color: Colors.purple[100],),
+                children: [
+                  Icon(
+                    Icons.diamond,
+                    size: 50,
+                    color: Colors.purple[100],
+                  ),
                   Text('SHRINE')
-
-                ] ,
+                ],
               ),
-
               Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 300,
-                      color:Colors.purple[100],
-                      margin: EdgeInsets.only(bottom: 20),
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      child: TextField(
-                        decoration: InputDecoration(hintText: "Username"),
-                       // padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-
-                      ),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 300,
+                    color: Colors.purple[100],
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TextField(
+                      decoration: InputDecoration(hintText: "Username"),
+                      controller: userName,
                     ),
-                    Container(
-                      width: 300,
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-
-                      decoration: BoxDecoration(
-                     //   border: Border(bottom : BorderSide(color: Colors.black38,  width: 2.5)),
-                        color:Colors.purple[100],
-
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(hintText: "Password"),
-                      ),
+                  ),
+                  Container(
+                    width: 300,
+                    margin: EdgeInsets.only(bottom: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.purple[100],
                     ),
-                  ],
-                ),
+                    child: TextField(
+                      obscureText: true,
+                      controller: password,
+                      decoration: InputDecoration(hintText: "Password"),
+                    ),
+                  ),
+                  Container(
+                    width: 300,
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: ElevatedButton(
+                        child: Text(
+                          "login",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => WelcomeScreen(userName:' ${userName.text}',password:' ${password.text}')));
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all(Colors.purple[200]),
+                          foregroundColor:
+                          MaterialStateProperty.all(Colors.purple[50]),
+                          padding:
+                          MaterialStateProperty.all(EdgeInsets.all(20)),
+                        )),
+                  ),
+                  Container(
+                    width: 300,
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: ElevatedButton(
+                        child: Text(
+                          "Clear",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        onPressed: () {userName.clear();password.clear();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all(Colors.purple[200]),
+                          foregroundColor:
+                          MaterialStateProperty.all(Colors.purple[50]),
+                          padding:
+                          MaterialStateProperty.all(EdgeInsets.all(20)),
+                        )),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
